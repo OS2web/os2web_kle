@@ -1,0 +1,47 @@
+<?php
+
+use Drupal\os2web_kle\Form\SettingsForm;
+
+/**
+ * Implements hook_cron().
+ */
+function os2web_kle_cron() {
+  /** @var \Drupal\Core\State\StateInterface $state */
+  $state = \Drupal::service('state');
+  $lastImport = $state->get('os2web_kle.import_last_run');
+
+  $config = \Drupal::config(SettingsForm::$configName);
+  $days = $config->get('import_schedule');
+
+  $next_scheduled_run = strtotime("+$days days", $lastImport);
+
+  if ($next_scheduled_run <= time()) {
+    os2web_kle_import_run();
+  }
+}
+
+/**
+ * Runs the import process.
+ */
+function os2web_kle_import_run() {
+  /** @var \Drupal\os2web_kle\Services\KleService $kleService */
+  $kleService = \Drupal::service('os2web_kle.service');
+
+  // Getting KLE xml.
+  $xml = $kleService->getXml();
+
+  // Start converting file to a Feed importer friendly format.
+  $feedsXml = $kleService->convertXmlToFeeds($xml);
+
+  // Write XML file locally.
+  $kleService->writeKleFeedsFile($feedsXml);
+
+  // Set timestamp for when import was last run and when to run next
+  /** @var \Drupal\Core\State\StateInterface $state */
+  $state = \Drupal::service('state');
+
+  $state->set('os2web_kle.import_last_run', time());
+
+  \Drupal::logger('os2web_kle')
+    ->debug('XML successfully converted and saved as feeds XML file');
+}

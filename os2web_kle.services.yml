@@ -1,0 +1,4 @@
+services:
+  os2web_kle.service:
+    class: Drupal\os2web_kle\Services\KleService
+    arguments: []

@@ -1,0 +1,7 @@
+os2web_kle.settings:
+  path: '/admin/config/content/os2web-kle'
+  defaults:
+    _title: 'OS2Web KLE settings'
+    _form: 'Drupal\os2web_kle\Form\SettingsForm'
+  requirements:
+    _permission: 'administer content types'

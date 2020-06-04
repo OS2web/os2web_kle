@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies: {  }
+id: os2web_kle
+label: 'OS2Web KLE'
+description: ''
+folder: modules/contrib/os2web_kle/config/optional
+module: {  }
+theme: {  }
+blacklist:
+  - 'os2web_kle*'
+  - '*os2web_kle*'
+  - 'os2web_kle*'
+  - os2web_kle.settings
+graylist: {  }
+graylist_dependents: false
+graylist_skip_equal: false
+weight: 0

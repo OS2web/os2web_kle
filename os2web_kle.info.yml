@@ -1,0 +1,10 @@
+name: OS2Web KLE
+type: module
+description: Providing KLE terms import
+core: 8.x
+package: OS2Web
+dependencies:
+  - feeds
+  - feeds_ex
+  - feeds_tamper
+configure: os2web_kle.settings

@@ -1,0 +1,26 @@
+<?php
+
+use Drupal\feeds\Entity\Feed;
+use Drupal\os2web_kle\Form\SettingsForm;
+
+/**
+ * Implements hook_install().
+ */
+function os2web_kle_install() {
+  $config = \Drupal::configFactory()->getEditable(SettingsForm::$configName);
+
+  $config->set('webservice_url', 'http://www.klxml.dk/download/XML-ver2-0/KLE-Emneplan_Version2-0.xml');
+  $config->set('local_file_url', 'public://kle.xml');
+  $config->set('retsinfo_url', 'http://www.retsinfo.dk/_GETDOC_/ACCN/');
+  $config->set('import_interval_days', 30);
+
+  $config->save(TRUE);
+
+  // Creating feed importer.
+  $feed = Feed::create([
+    'title' => 'KLE importer',
+    'type' => 'os2web_kle_import',
+    'source' => 'public://kle.xml'
+  ]);
+  $feed->save();
+}

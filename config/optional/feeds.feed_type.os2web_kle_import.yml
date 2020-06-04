@@ -1,0 +1,155 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.base_field_override.taxonomy_term.os2web_kle.description
+    - core.base_field_override.taxonomy_term.os2web_kle.name
+    - field.field.taxonomy_term.os2web_kle.feeds_item
+    - field.field.taxonomy_term.os2web_kle.field_os2web_kle_legi_ref
+    - taxonomy.vocabulary.os2web_kle
+  module:
+    - feeds_ex
+    - feeds_tamper
+    - taxonomy
+third_party_settings:
+  feeds_tamper:
+    tampers:
+      35ea1858-3e98-42f6-9084-eecd155291c9:
+        text: '[concat_key_name_] [name]'
+        plugin: rewrite
+        source: name
+        weight: 0
+        label: Rewrite
+        uuid: 35ea1858-3e98-42f6-9084-eecd155291c9
+      06ae3169-405a-472e-b610-66d6d653dd25:
+        num_char: 250
+        ellipses: true
+        wordsafe: false
+        plugin: truncate_text
+        source: tag_tagtypesqlid_2_key
+        weight: 0
+        label: Truncate
+        uuid: 06ae3169-405a-472e-b610-66d6d653dd25
+id: os2web_kle_import
+label: 'OS2Web KLE import'
+description: ''
+help: ''
+import_period: 2419200
+fetcher: directory
+fetcher_configuration:
+  allowed_extensions: xml
+  allowed_schemes:
+    public: public
+  recursive_scan: false
+parser: xml
+parser_configuration:
+  context:
+    value: /Taxonomy/Taxon
+  sources:
+    concat_key_name_:
+      label: Key
+      value: Key
+    name:
+      label: Name
+      value: Name
+    _parentkey:
+      label: '@ParentKey'
+      value: '@ParentKey'
+    description:
+      label: Description
+      value: Description
+    tag_tagtypesqlid_2_value:
+      label: 'Tag[@TagTypeSqlID=2]/Value'
+      value: 'Tag[@TagTypeSqlID=2]/Value'
+    tag_tagtypesqlid_2_key:
+      label: 'Tag[@TagTypeSqlID=2]/Key'
+      value: 'Tag[@TagTypeSqlID=2]/Key'
+  use_tidy: false
+  display_errors: false
+  source_encoding:
+    - auto
+  debug_mode: false
+  line_limit: 100
+processor: 'entity:taxonomy_term'
+processor_configuration:
+  langcode: da
+  update_existing: 2
+  update_non_existent: _keep
+  expire: -1
+  skip_hash_check: false
+  values:
+    vid: os2web_kle
+  owner_id: 0
+  authorize: false
+  owner_feed_author: false
+custom_sources:
+  concat_key_name_:
+    label: Key
+    value: Key
+    machine_name: concat_key_name_
+  '':
+    label: '@'
+    value: '@'
+    machine_name: ''
+  _parentkey:
+    label: '@ParentKey'
+    value: '@ParentKey'
+    machine_name: _parentkey
+  description:
+    label: Description
+    value: Description
+    machine_name: description
+  name:
+    label: Name
+    value: Name
+    machine_name: name
+  tag_tagtypesqlid_4_key:
+    label: 'Tag[@TagTypeSqlID=4]/Key'
+    value: 'Tag[@TagTypeSqlID=4]/Key'
+    machine_name: tag_tagtypesqlid_4_key
+  tag_tagtypesqlid_2_value:
+    label: 'Tag[@TagTypeSqlID=2]/Value'
+    value: 'Tag[@TagTypeSqlID=2]/Value'
+    machine_name: tag_tagtypesqlid_2_value
+  tag_tagtypesqlid_2_key:
+    label: 'Tag[@TagTypeSqlID=2]/Key'
+    value: 'Tag[@TagTypeSqlID=2]/Key'
+    machine_name: tag_tagtypesqlid_2_key
+mappings:
+  -
+    target: feeds_item
+    map:
+      url: ''
+      guid: concat_key_name_
+    unique:
+      guid: '1'
+    settings: {  }
+  -
+    target: name
+    map:
+      value: name
+    unique: {  }
+    settings:
+      language: null
+  -
+    target: parent
+    map:
+      target_id: _parentkey
+    settings:
+      reference_by: feeds_item
+      feeds_item: guid
+      autocreate: 0
+  -
+    target: description
+    map:
+      value: description
+    settings:
+      language: ''
+      format: wysiwyg_tekst
+  -
+    target: field_os2web_kle_legi_ref
+    map:
+      uri: tag_tagtypesqlid_2_value
+      title: tag_tagtypesqlid_2_key
+    settings:
+      language: null

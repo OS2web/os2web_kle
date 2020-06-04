@@ -1,0 +1,5 @@
+os2web_kle.settings:
+  title: OS2Web KLE settings
+  description: Settings for OS2Web KLE.
+  route_name: os2web_kle.settings
+  parent: system.admin_config_content
