@@ -21,7 +21,7 @@ function os2web_kle_install() {
     'title' => 'KLE importer',
     'type' => 'os2web_kle_import',
     'source' => 'public://kle.xml',
-	'uid' => 1
+	  'uid' => 1
   ]);
   $feed->save();
 }
