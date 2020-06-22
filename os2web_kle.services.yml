@@ -2,3 +2,10 @@ services:
   os2web_kle.service:
     class: Drupal\os2web_kle\Services\KleService
     arguments: []
+  os2web_kle.route_subscriber:
+    class: Drupal\os2web_kle\Routing\AutocompleteRouteSubscriber
+    tags:
+      - { name: event_subscriber }
+  os2web_kle.autocomplete_matcher:
+    class: Drupal\os2web_kle\EntityAutocompleteMatcher
+    arguments: ['@plugin.manager.entity_reference_selection']
