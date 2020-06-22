@@ -94,7 +94,7 @@ class SettingsForm extends ConfigFormBase {
     $lastImport_date = ($lastImport != 0 ? \Drupal::service('date.formatter')
       ->format($lastImport, 'long') : t('Never'));
 
-    // Display when import last ran,
+    // Display when import last ran.
     $form[] = [
       '#prefix' => '<p>',
       '#suffix' => '</p>',

@@ -7,5 +7,5 @@ services:
     tags:
       - { name: event_subscriber }
   os2web_kle.autocomplete_matcher:
-    class: Drupal\os2web_kle\EntityAutocompleteMatcher
+    class: Drupal\os2web_kle\KleAutocompleteMatcher
     arguments: ['@plugin.manager.entity_reference_selection']

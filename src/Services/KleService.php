@@ -20,7 +20,7 @@ class KleService {
   public function getXml() {
     $config = \Drupal::config(SettingsForm::$configName);
 
-    // Load XML file from url and convert to feed-import-friendly format
+    // Load XML file from url and convert to feed-import-friendly format.
     $remote_url = $config->get('webservice_url');
 
     $client = \Drupal::httpClient();
@@ -47,7 +47,7 @@ class KleService {
       return NULL;
     }
 
-    // Check if XML file is a KLE XML file
+    // Check if XML file is a KLE XML file.
     if (!$xml_obj->xpath('/KLE-Emneplan')) {
       \Drupal::logger('os2web_kle')
         ->error('Retrieved file from @remote_url cannot be parsed as KLE XML file', ['@remote_url' => $remote_url]);
@@ -65,7 +65,6 @@ class KleService {
    *
    * @return string
    *   Data in XML format in Feeds friendly format.
-   *
    */
   public function convertXmlToFeeds(\SimpleXMLElement $kleXml) {
     $config = \Drupal::config(SettingsForm::$configName);
@@ -112,14 +111,14 @@ class KleService {
       $name_node->nodeValue = (string) $hovedgruppe->HovedgruppeTitel;
       $taxon_node->appendChild($name_node);
 
-      // Check if Hovedgruppe is discontinued
+      // Check if Hovedgruppe is discontinued.
       if ($hovedgruppe->xpath('HovedgruppeAdministrativInfo/Historisk/UdgaaetDato')) {
         $discontinued_node = $dom_doc->createAttribute('Discontinued');
         $discontinued_node->value = 'true';
         $taxon_node->appendChild($discontinued_node);
       }
 
-      // Check for Hovedgruppevejledning
+      // Check for Hovedgruppevejledning.
       if ($hovedgruppe->xpath('HovedgruppeVejledning/VejledningTekst')) {
         $description_node = $dom_doc->createElement('Description');
         $description_node->nodeValue = $hovedgruppe->HovedgruppeVejledning->VejledningTekst->saveXML();
@@ -129,8 +128,7 @@ class KleService {
       /*
        * Gruppe
        */
-      foreach($hovedgruppe->Gruppe as $gruppe) {
-
+      foreach ($hovedgruppe->Gruppe as $gruppe) {
         if ($gruppe->xpath('GruppeAdministrativInfo/Historisk/UdgaaetDato') && $discontinued) {
           continue;
         }
@@ -155,14 +153,14 @@ class KleService {
         $gruppe_name->nodeValue = (string) $gruppe->GruppeTitel;
         $gruppe_taxon->appendChild($gruppe_name);
 
-        // Check if Gruppe is discontinued
+        // Check if Gruppe is discontinued.
         if ($gruppe->xpath('GruppeAdministrativInfo/Historisk/UdgaaetDato')) {
           $gruppe_discontinued = $dom_doc->createAttribute('Discontinued');
           $gruppe_discontinued->value = 'true';
           $gruppe_taxon->appendChild($gruppe_discontinued);
         }
 
-        // Check for Gruppevejledning
+        // Check for Gruppevejledning.
         if ($gruppe->xpath('GruppeVejledning/VejledningTekst')) {
           $gruppe_description = $dom_doc->createElement('Description');
           $gruppe_description->nodeValue = $gruppe->GruppeVejledning->VejledningTekst->saveXML();
@@ -183,7 +181,7 @@ class KleService {
             $gruppe_tag->appendChild($gruppe_tag_id);
 
             $gruppe_ref_key = $dom_doc->createElement('Key');
-            // Check if element 'ParagrafEllerKapitel'
+            // Check if element 'ParagrafEllerKapitel'.
             if ($gruppe_paragraph = $gruppe->xpath('EmneRetskildeReference/ParagrafEllerKapitel')) {
               $gruppe_ref_key->nodeValue = (string) $reference->RetskildeTitel . ' ' . $gruppe_paragraph[0];
             }
@@ -227,14 +225,14 @@ class KleService {
           $emne_name->nodeValue = (string) $emne->EmneTitel;
           $emne_taxon->appendChild($emne_name);
 
-          // Check if Emne is discontinued
+          // Check if Emne is discontinued.
           if ($emne->xpath('EmneAdministrativInfo/Historisk/UdgaaetDato')) {
             $emne_discontinued = $dom_doc->createAttribute('Discontinued');
             $emne_discontinued->value = 'true';
             $emne_taxon->appendChild($emne_discontinued);
           }
 
-          // Check for Emnevejledning
+          // Check for Emnevejledning.
           if ($emne->xpath('EmneVejledning/VejledningTekst')) {
             $emne_description = $dom_doc->createElement('Description');
             $emne_description->nodeValue = $emne->EmneVejledning->VejledningTekst->saveXML();
@@ -255,7 +253,7 @@ class KleService {
               $emne_tag->appendChild($emne_tag_id);
 
               $emne_ref_key = $dom_doc->createElement('Key');
-              // Check if element 'ParagrafEllerKapitel'
+              // Check if element 'ParagrafEllerKapitel'.
               if ($emne_paragraph = $emne->xpath('EmneRetskildeReference/ParagrafEllerKapitel')) {
                 $emne_ref_key->nodeValue = (string) $reference->RetskildeTitel . ' ' . $emne_paragraph[0];
               }
@@ -278,7 +276,7 @@ class KleService {
   /**
    * Writes Feeds data into a local file.
    *
-   * @param $feedsXml
+   * @param string $feedsXml
    *   String data.
    */
   public function writeKleFeedsFile($feedsXml) {

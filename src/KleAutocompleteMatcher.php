@@ -2,9 +2,13 @@
 
 namespace Drupal\os2web_kle;
 
+use Drupal\Core\Entity\EntityAutocompleteMatcher;
 use Drupal\os2web_kle\Form\SettingsForm;
 
-class EntityAutocompleteMatcher extends \Drupal\Core\Entity\EntityAutocompleteMatcher {
+/**
+ * OS2Web KLE KleAutocompleteMatcher.
+ */
+class KleAutocompleteMatcher extends EntityAutocompleteMatcher {
 
   /**
    * {@inheritdoc}

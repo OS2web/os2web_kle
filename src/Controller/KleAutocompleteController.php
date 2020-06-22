@@ -3,20 +3,26 @@
 namespace Drupal\os2web_kle\Controller;
 
 use Drupal\Core\KeyValueStore\KeyValueStoreInterface;
-use Drupal\os2web_kle\EntityAutocompleteMatcher;
+use Drupal\os2web_kle\KleAutocompleteMatcher;
+use Drupal\system\Controller\EntityAutocompleteController;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class EntityAutocompleteController extends \Drupal\system\Controller\EntityAutocompleteController {
+/**
+ * OS2Web KLE KleAutocompleteController.
+ */
+class KleAutocompleteController extends EntityAutocompleteController {
 
   /**
    * The autocomplete matcher for entity references.
+   *
+   * @var \Drupal\os2web_kle\KleAutocompleteMatcher
    */
   protected $matcher;
 
   /**
    * {@inheritdoc}
    */
-  public function __construct(EntityAutocompleteMatcher $matcher, KeyValueStoreInterface $key_value) {
+  public function __construct(KleAutocompleteMatcher $matcher, KeyValueStoreInterface $key_value) {
     $this->matcher = $matcher;
     $this->keyValue = $key_value;
   }
