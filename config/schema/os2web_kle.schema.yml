@@ -1,0 +1,27 @@
+# Schema for the configuration files of the OS2Web KLE module.
+
+os2web_kle.settings:
+  type: config_entity
+  label: 'OS2Web KLE'
+  mapping:
+    webservice_url:
+      type: string
+      label: 'URL to KLE XML fil'
+    local_file_url:
+      type: string
+      label: 'URL til lokal KLE XML fil'
+    retsinfo_url:
+      type: string
+      label: 'Base URL to retsinfo (MUST end with "/")'
+    import_interval_days:
+      type: integer
+      label: 'Amount of days between imports'
+    ignore_admin_path:
+      type: boolean
+      label: 'Allow redirections on admin paths.'
+    feeds_remove_deleted_kle:
+      type: boolean
+      label: 'Remove obsolete KLE from Feeds file'
+    autocomplete_hide_deleted_kle:
+      type: boolean
+      label: 'Hide obsolete KLE from autocomplete list'
