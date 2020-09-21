@@ -2,6 +2,7 @@
 
 use Drupal\feeds\Entity\Feed;
 use Drupal\os2web_kle\Form\SettingsForm;
+use Drupal\feeds\Entity\FeedType;
 
 /**
  * Implements hook_install().
@@ -16,12 +17,15 @@ function os2web_kle_install() {
 
   $config->save(TRUE);
 
-  // Creating feed importer.
-  $feed = Feed::create([
-    'title' => 'KLE importer',
-    'type' => 'os2web_kle_import',
-    'source' => 'public://kle.xml',
-	  'uid' => 1
-  ]);
-  $feed->save();
+  if (FeedType::load('os2web_kle_import')) {
+    // Creating feed importer.
+    $feed = Feed::create([
+      'title' => 'KLE importer',
+      'type' => 'os2web_kle_import',
+      'source' => 'public://kle.xml',
+      'uid' => 1
+    ]);
+    $feed->save();
+  }
+
 }
