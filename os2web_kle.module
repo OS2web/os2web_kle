@@ -5,6 +5,7 @@
  * Primary module hooks for os2web_kle module.
  */
 
+use Drupal\feeds\Entity\Feed;
 use Drupal\os2web_kle\Form\SettingsForm;
 
 /**
@@ -53,5 +54,22 @@ function os2web_kle_import_run() {
   else {
     \Drupal::logger('os2web_kle')
         ->error('XML file conversion error');
+  }
+}
+
+/**
+ * Implements hook_modules_installed().
+ */
+function os2web_kle_modules_installed($modules) {
+  if (in_array('feeds', $modules) && in_array('os2web_kle', $modules)) {
+    // Creating feed importer.
+    $feed = Feed::create([
+      'title' => 'KLE importer',
+      'type' => 'os2web_kle_import',
+      'source' => 'public://kle.xml',
+      'uid' => 1
+    ]);
+
+    $feed->save();
   }
 }

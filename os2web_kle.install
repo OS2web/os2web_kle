@@ -16,16 +16,4 @@ function os2web_kle_install() {
   $config->set('import_interval_days', 30);
 
   $config->save(TRUE);
-
-  if (FeedType::load('os2web_kle_import')) {
-    // Creating feed importer.
-    $feed = Feed::create([
-      'title' => 'KLE importer',
-      'type' => 'os2web_kle_import',
-      'source' => 'public://kle.xml',
-      'uid' => 1
-    ]);
-    $feed->save();
-  }
-
 }
