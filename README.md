@@ -35,6 +35,17 @@ Settings are available under ```admin/config/content/os2web-kle```
 
 1. After activation, run cron to trigger the import.
 
+## Installing module from existing configuration
+
+There is an acknowledged problem when installing this module from existing configuration, namely the imported Feed is not being created automatically.
+
+If that is the case, and you don't see a feed item present in `admin/content/feed`, then follow those simple steps to create it manually:
+
+1. Go to ```feed/add/os2web_kle_import```
+2. Create a new feed with the following values:
+* **Title**: _KLE importer_
+* **Path**: _public://kle.xml_
+
 ## Update
 Updating process for OS2Web KLE module is similar to usual Drupal 8 module.
 Use Composer's built-in command for listing packages that have updates available:
