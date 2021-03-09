@@ -2,6 +2,7 @@ name: OS2Web KLE
 type: module
 description: Providing KLE terms import
 core: 8.x
+core_version_requirement: ^8 || ^9
 package: OS2Web
 dependencies:
   - feeds
