@@ -5,6 +5,7 @@
  * Primary module hooks for os2web_kle module.
  */
 
+use Drupal\feeds\Entity\Feed;
 use Drupal\os2web_kle\Form\SettingsForm;
 
 /**

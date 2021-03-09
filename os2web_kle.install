@@ -2,6 +2,7 @@
 
 use Drupal\feeds\Entity\Feed;
 use Drupal\os2web_kle\Form\SettingsForm;
+use Drupal\feeds\Entity\FeedType;
 
 /**
  * Implements hook_install().
@@ -16,12 +17,42 @@ function os2web_kle_install() {
 
   $config->save(TRUE);
 
-  // Creating feed importer.
-  $feed = Feed::create([
-    'title' => 'KLE importer',
-    'type' => 'os2web_kle_import',
-    'source' => 'public://kle.xml',
-	  'uid' => 1
-  ]);
-  $feed->save();
+  if (FeedType::load('os2web_kle_import')) {
+    // Creating feed importer.
+    $feed = Feed::create([
+      'title' => 'KLE importer',
+      'type' => 'os2web_kle_import',
+      'source' => 'public://kle.xml',
+      'uid' => 1,
+    ]);
+    $feed->save();
+  }
+}
+
+/**
+ * Implements hook_requirements().
+ */
+function os2web_kle_requirements($phase) {
+  $requirements = [];
+  if ($phase !== 'runtime') {
+    return $requirements;
+  }
+
+  $messages = t('OS2Web KLE import feed exists.');
+  $severity = REQUIREMENT_OK;
+
+  $query = \Drupal::entityQuery('feeds_feed');
+  $query->condition('type', 'os2web_kle_import');
+  $entity_ids = $query->execute();
+  if (empty($entity_ids)) {
+    $messages = t('OS2Web KLE import feed is not created. Please create it <a target="_blank" href="@manual">manually</a>.', ['@manual' => 'https://github.com/OS2web/os2web_kle#installing-module-from-existing-configuration']);
+    $severity = REQUIREMENT_ERROR;
+  }
+
+  $requirements['os2web_kle'] = [
+    'title' => t('OS2Web KLE'),
+    'severity' => $severity,
+    'value' => $messages,
+  ];
+  return $requirements;
 }
