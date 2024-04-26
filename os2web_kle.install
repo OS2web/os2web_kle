@@ -41,7 +41,7 @@ function os2web_kle_requirements($phase) {
   $messages = t('OS2Web KLE import feed exists.');
   $severity = REQUIREMENT_OK;
 
-  $query = \Drupal::entityQuery('feeds_feed');
+  $query = \Drupal::entityQuery('feeds_feed')->accessCheck(false);
   $query->condition('type', 'os2web_kle_import');
   $entity_ids = $query->execute();
   if (empty($entity_ids)) {
