@@ -6,8 +6,8 @@
     "prefer-stable": true,
     "license": "EUPL-1.2",
     "require": {
-        "drupal/feeds": "^3.0@alpha",
-        "drupal/feeds_ex": "^1.0@alpha",
-        "drupal/feeds_tamper": "dev-2.x"
+        "drupal/feeds": "^3.0@beta",
+        "drupal/feeds_ex": "^1.0@beta",
+        "drupal/feeds_tamper": "^2.0@beta"
     }
 }
