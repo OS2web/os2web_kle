@@ -7,7 +7,6 @@
     "license": "EUPL-1.2",
     "require": {
         "drupal/feeds": "^3.0@beta",
-        "drupal/feeds_ex": "^1.0@beta",
-        "drupal/feeds_tamper": "^2.0@beta"
+        "drupal/feeds_ex": "^1.0@beta"
     }
 }
